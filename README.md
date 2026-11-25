@@ -2,8 +2,16 @@
 
 [![ci](https://github.com/shani8615/go-redact/actions/workflows/ci.yml/badge.svg)](https://github.com/shani8615/go-redact/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/shani8615/go-redact.svg)](https://pkg.go.dev/github.com/shani8615/go-redact)
+[![Go Report Card](https://goreportcard.com/badge/github.com/shani8615/go-redact)](https://goreportcard.com/report/github.com/shani8615/go-redact)
+[![Release](https://img.shields.io/github/v/release/shani8615/go-redact?sort=semver)](https://github.com/shani8615/go-redact/releases)
+[![Go version](https://img.shields.io/github/go-mod/go-version/shani8615/go-redact)](go.mod)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Keep secrets and personal data out of your logs.** A `log/slog` handler that cleans every record before it's written. It has no dependencies outside the standard library.
+
+![go-redact: the same log lines with and without redaction](docs/demo.gif)
+
+<sub>Try it: `go run ./examples/demo`</sub>
 
 ```bash
 go get github.com/shani8615/go-redact
@@ -78,6 +86,20 @@ logger := slog.New(redact.NewHandler(base, r))
 - Redaction is defense in depth. It catches mistakes, but it is no excuse to log secrets on purpose.
 - Patterns run on every string value. In very hot logging paths, log fewer free-text fields instead of turning rules off.
 - Cyclic or very deep structures are cut off at `MaxDepth` (default 8) with `[TRUNCATED]`.
+
+## Why go-redact?
+
+| | go-redact | [masq](https://github.com/m-mizutani/masq) | hand-written `ReplaceAttr` |
+|---|---|---|---|
+| How it plugs in | wraps any `slog.Handler` | `slog.HandlerOptions.ReplaceAttr` | `ReplaceAttr` |
+| Built-in secret detectors (JWTs, bearer tokens, cloud/SaaS keys, private keys, URL credentials), applied to every string including the message and error text | ✓ | rules you configure (type, field name, prefix, tag, regex) | ✗ |
+| Card numbers with Luhn check, so IDs survive | ✓ | — | ✗ |
+| Struct tags | `redact:"secret\|email\|last4\|hash\|-"` | `masq:"…"` | ✗ |
+| Dependencies | standard library only | — | — |
+
+<sub>— = not documented in that project's README/docs at the time of writing.</sub>
+
+**Pick go-redact** to catch secrets you didn't anticipate, for example a token inside an upstream error message. **Pick masq** if you prefer precise, explicit rules by type or field and don't want pattern scanning.
 
 ## License
 
