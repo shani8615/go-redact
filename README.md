@@ -2,7 +2,6 @@
 
 [![ci](https://github.com/shani8615/go-redact/actions/workflows/ci.yml/badge.svg)](https://github.com/shani8615/go-redact/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/shani8615/go-redact.svg)](https://pkg.go.dev/github.com/shani8615/go-redact)
-[![Go Report Card](https://goreportcard.com/badge/github.com/shani8615/go-redact)](https://goreportcard.com/report/github.com/shani8615/go-redact)
 [![Release](https://img.shields.io/github/v/release/shani8615/go-redact?sort=semver)](https://github.com/shani8615/go-redact/releases)
 [![Go version](https://img.shields.io/github/go-mod/go-version/shani8615/go-redact)](go.mod)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
